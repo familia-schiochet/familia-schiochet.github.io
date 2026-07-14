@@ -543,24 +543,42 @@
   }
   .carrossel::-webkit-scrollbar { height: 8px; }
   .carrossel::-webkit-scrollbar-thumb { background: var(--linha); border-radius: 8px; }
+  .carrossel { cursor: grab; }
+  .carrossel.arrastando { cursor: grabbing; scroll-behavior: auto; user-select: none; }
   .cartao-link {
     scroll-snap-align: start; flex: 0 0 auto;
-    width: clamp(158px, 44vw, 208px); min-height: 148px;
+    width: clamp(212px, 72vw, 262px);
     background: var(--papel-carta);
-    border: 1px solid var(--linha); border-top: 3px solid var(--latao);
-    border-radius: 5px; padding: 18px 16px 16px;
+    border: 1px solid var(--linha);
+    border-radius: 8px; overflow: hidden;
     text-decoration: none; color: var(--tinta);
-    display: flex; flex-direction: column; gap: 7px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    display: flex; flex-direction: column;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
     transition: transform .15s ease, box-shadow .15s ease;
   }
   .cartao-link:hover, .cartao-link:focus-visible {
-    transform: translateY(-3px); box-shadow: 0 7px 20px rgba(0,0,0,.13); outline: none;
+    transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,.16); outline: none;
   }
-  .cartao-link .ic { font-size: 1.75rem; line-height: 1; }
+  .cartao-link .thumb {
+    position: relative; width: 100%; aspect-ratio: 16 / 10;
+    background: var(--linha); overflow: hidden;
+  }
+  .cartao-link .thumb img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    -webkit-user-drag: none; user-select: none;
+  }
+  .cartao-link .thumb::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 52%, rgba(0,0,0,.30));
+  }
+  .cartao-link .badge {
+    position: absolute; left: 10px; bottom: 8px; z-index: 2;
+    font-size: 1.5rem; line-height: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,.6));
+  }
+  .cartao-link .corpo { padding: 12px 14px 15px; display: flex; flex-direction: column; gap: 5px; }
   .cartao-link .tit {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.3rem; font-weight: 600; line-height: 1.1; color: var(--latao-texto);
+    font-size: 1.34rem; font-weight: 600; line-height: 1.08; color: var(--latao-texto);
   }
   .cartao-link .teaser { font-size: .82rem; color: var(--tinta-suave); line-height: 1.4; }
 
@@ -628,19 +646,19 @@
 
 <div id="inicio">
   <p class="abre-inicio">Este é o nosso álbum de família. Toque num assunto para abrir — e volte ao início quando quiser.</p>
-  <p class="dica-arraste" aria-hidden="true">↔ arraste para o lado para ver todos os assuntos</p>
+  <p class="dica-arraste" aria-hidden="true">↔ arraste para o lado (ou use a rodinha do mouse) para ver todos os assuntos</p>
   <nav class="carrossel" aria-label="Assuntos do álbum">
-    <a class="cartao-link" href="#geracoes"><span class="ic" aria-hidden="true">👪</span><span class="tit">As gerações</span><span class="teaser">Dos mais antigos aos ramos de hoje.</span></a>
-    <a class="cartao-link" href="#arvore"><span class="ic" aria-hidden="true">🌳</span><span class="tit">A árvore</span><span class="teaser">A família desenhada, de Belluno até nós.</span></a>
-    <a class="cartao-link" href="#travessia"><span class="ic" aria-hidden="true">🌊</span><span class="tit">A travessia</span><span class="teaser">A viagem da Itália para o Brasil.</span></a>
-    <a class="cartao-link" href="#encontro"><span class="ic" aria-hidden="true">💍</span><span class="tit">O encontro</span><span class="teaser">O namoro e o casamento do vô e da vó.</span></a>
-    <a class="cartao-link" href="#engenho"><span class="ic" aria-hidden="true">🏠</span><span class="tit">O engenho e a casa</span><span class="teaser">O melado, os doces e a casa tombada.</span></a>
-    <a class="cartao-link" href="#album"><span class="ic" aria-hidden="true">📸</span><span class="tit">Álbum de fotos</span><span class="teaser">As nossas fotos de família.</span></a>
-    <a class="cartao-link" href="#bodas-ouro"><span class="ic" aria-hidden="true">💛</span><span class="tit">Bodas de ouro</span><span class="teaser">Os 50 anos do nono e da nona.</span></a>
-    <a class="cartao-link" href="#documentos"><span class="ic" aria-hidden="true">📜</span><span class="tit">Documentos e lembranças</span><span class="teaser">Certidões e lembrancinhas guardadas.</span></a>
-    <a class="cartao-link" href="#quem-lembra"><span class="ic" aria-hidden="true">❓</span><span class="tit">Quem lembra?</span><span class="teaser">Perguntas que a família ajuda a responder.</span></a>
-    <a class="cartao-link" href="#receitas"><span class="ic" aria-hidden="true">🍰</span><span class="tit">Receitas &amp; ditados</span><span class="teaser">A cuca da vó e o jeito de falar.</span></a>
-    <a class="cartao-link" href="#recados"><span class="ic" aria-hidden="true">💬</span><span class="tit">Deixe seu recado</span><span class="teaser">Mande um carinho, uma foto, uma história.</span></a>
+    <a class="cartao-link" href="#geracoes"><span class="thumb"><img loading="lazy" decoding="async" src="img/tres_geracoes.jpg" alt=""><span class="badge" aria-hidden="true">👪</span></span><span class="corpo"><span class="tit">As gerações</span><span class="teaser">Dos mais antigos aos ramos de hoje.</span></span></a>
+    <a class="cartao-link" href="#arvore"><span class="thumb"><img loading="lazy" decoding="async" src="img/nono_nona_retrato.jpg" alt=""><span class="badge" aria-hidden="true">🌳</span></span><span class="corpo"><span class="tit">A árvore</span><span class="teaser">A família desenhada, de Belluno até nós.</span></span></a>
+    <a class="cartao-link" href="#travessia"><span class="thumb"><img loading="lazy" decoding="async" src="img/mericiana.jpg" alt=""><span class="badge" aria-hidden="true">🌊</span></span><span class="corpo"><span class="tit">A travessia</span><span class="teaser">A viagem da Itália para o Brasil.</span></span></a>
+    <a class="cartao-link" href="#encontro"><span class="thumb"><img loading="lazy" decoding="async" src="img/casamento.jpg" alt=""><span class="badge" aria-hidden="true">💍</span></span><span class="corpo"><span class="tit">O encontro</span><span class="teaser">O namoro e o casamento do vô e da vó.</span></span></a>
+    <a class="cartao-link" href="#engenho"><span class="thumb"><img loading="lazy" decoding="async" src="img/casa_tombada.jpg" alt=""><span class="badge" aria-hidden="true">🏠</span></span><span class="corpo"><span class="tit">O engenho e a casa</span><span class="teaser">O melado, os doces e a casa tombada.</span></span></a>
+    <a class="cartao-link" href="#album"><span class="thumb"><img loading="lazy" decoding="async" src="img/grupo_familia.jpg" alt=""><span class="badge" aria-hidden="true">📸</span></span><span class="corpo"><span class="tit">Álbum de fotos</span><span class="teaser">As nossas fotos de família.</span></span></a>
+    <a class="cartao-link" href="#bodas-ouro"><span class="thumb"><img loading="lazy" decoding="async" src="img/bodas_principal.jpg" alt=""><span class="badge" aria-hidden="true">💛</span></span><span class="corpo"><span class="tit">Bodas de ouro</span><span class="teaser">Os 50 anos do nono e da nona.</span></span></a>
+    <a class="cartao-link" href="#documentos"><span class="thumb"><img loading="lazy" decoding="async" src="img/doc_casamento1965.jpg" alt=""><span class="badge" aria-hidden="true">📜</span></span><span class="corpo"><span class="tit">Documentos e lembranças</span><span class="teaser">Certidões e lembrancinhas guardadas.</span></span></a>
+    <a class="cartao-link" href="#quem-lembra"><span class="thumb"><img loading="lazy" decoding="async" src="img/vo_vo_familia_antiga.jpg" alt=""><span class="badge" aria-hidden="true">❓</span></span><span class="corpo"><span class="tit">Quem lembra?</span><span class="teaser">Perguntas que a família ajuda a responder.</span></span></a>
+    <a class="cartao-link" href="#receitas"><span class="thumb"><img loading="lazy" decoding="async" src="img/vo_maria_coracao.jpg" alt=""><span class="badge" aria-hidden="true">🍰</span></span><span class="corpo"><span class="tit">Receitas &amp; ditados</span><span class="teaser">A cuca da vó e o jeito de falar.</span></span></a>
+    <a class="cartao-link" href="#recados"><span class="thumb"><img loading="lazy" decoding="async" src="img/beijo_na_vo.jpg" alt=""><span class="badge" aria-hidden="true">💬</span></span><span class="corpo"><span class="tit">Deixe seu recado</span><span class="teaser">Mande um carinho, uma foto, uma história.</span></span></a>
   </nav>
   <div class="carta">
     <p>Este álbum é uma homenagem — aos que vieram antes de nós, e a todos que ainda vão chegar. Ele está sempre em construção, feito com carinho, no ritmo tranquilo das lembranças.</p>
@@ -1540,6 +1558,40 @@
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
   }
   render();
+})();
+
+(function () {
+  // Carrossel: arrastar com o mouse + roda do mouse rola para o lado.
+  var c = document.querySelector('.carrossel');
+  if (!c) return;
+  var down = false, moved = false, startX = 0, startScroll = 0;
+  c.addEventListener('mousedown', function (e) {
+    if (e.button !== 0) return;
+    down = true; moved = false; startX = e.pageX; startScroll = c.scrollLeft;
+    c.classList.add('arrastando');
+  });
+  window.addEventListener('mousemove', function (e) {
+    if (!down) return;
+    var dx = e.pageX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    c.scrollLeft = startScroll - dx;
+    if (moved) e.preventDefault();
+  });
+  window.addEventListener('mouseup', function () {
+    if (!down) return;
+    down = false; c.classList.remove('arrastando');
+    setTimeout(function () { moved = false; }, 0);
+  });
+  // se foi arraste, não deixa o cartão abrir sem querer
+  c.addEventListener('click', function (e) {
+    if (moved) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  // roda do mouse na vertical -> rola o carrossel na horizontal
+  c.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      c.scrollLeft += e.deltaY; e.preventDefault();
+    }
+  }, { passive: false });
 })();
 </script>
 
