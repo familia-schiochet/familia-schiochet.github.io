@@ -395,6 +395,29 @@
   .caderno p.verbete strong { color: var(--latao-texto); }
 
   /* ── Rodapé ──────────────────────────────────── */
+  /* ── Árvore da família ─────────────────────────── */
+  .arvore { margin-top: clamp(44px, 8vw, 68px); border-top: 1px solid var(--linha); padding-top: clamp(34px, 6vw, 52px); }
+  .arvore h3 { font-size: clamp(1.6rem, 4.5vw, 2.1rem); text-align: center; }
+  .arvore > .rotulo { display: block; text-align: center; color: var(--latao-texto); margin-bottom: 8px; }
+  .arvore-sub { text-align: center; color: var(--tinta-suave); font-style: italic; max-width: 34em; margin: 4px auto 32px; }
+  .tronco { list-style: none; margin: 0 auto; padding: 0; max-width: 470px; }
+  .tronco li { position: relative; text-align: center; padding-top: 30px; }
+  .tronco li:first-child { padding-top: 0; }
+  .tronco li::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1px; height: 30px; background: var(--latao); opacity: 0.45; }
+  .tronco li:first-child::before { display: none; }
+  .tronco .casal { display: inline-block; background: var(--papel-carta); border: 1px solid var(--linha); padding: 9px 16px; font-size: 0.98rem; }
+  .tronco .casal .lugar { display: block; font-size: 0.78rem; color: var(--tinta-suave); font-style: italic; margin-top: 1px; }
+  .tronco li.destaque .casal { border-color: var(--latao); box-shadow: 0 0 0 1px var(--latao); }
+  .descendentes { margin-top: clamp(32px, 6vw, 46px); }
+  .descendentes .raiz { text-align: center; color: var(--tinta-suave); font-style: italic; max-width: 32em; margin: 0 auto 24px; }
+  .filhos-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 16px; }
+  .filho-card { background: var(--papel-carta); border: 1px solid var(--linha); border-top: 2px solid var(--latao); padding: 14px 16px; }
+  .filho-card h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.28rem; font-weight: 600; margin: 0 0 6px; }
+  .filho-card ul { list-style: none; margin: 0; padding: 0; }
+  .filho-card li { font-size: 0.9rem; color: var(--tinta-suave); margin: 3px 0; }
+  .filho-card li .neto { color: var(--tinta); }
+  .filho-card .em-memoria { font-size: 0.8em; font-style: italic; color: var(--tinta-suave); }
+
   footer {
     border-top: 1px solid var(--linha);
     margin-top: clamp(56px, 9vw, 88px);
@@ -422,6 +445,7 @@
   <nav aria-label="Partes do álbum">
     <ul class="indice">
       <li><a href="#geracoes">As gerações</a></li>
+      <li><a href="#arvore">A árvore</a></li>
       <li><a href="#travessia">A travessia</a></li>
       <li><a href="#encontro">O encontro</a></li>
       <li><a href="#engenho">O engenho e a casa</a></li>
@@ -559,6 +583,45 @@
         </div>
       </div>
     </article>
+
+    <div class="arvore" id="arvore">
+      <p class="rotulo">De Belluno até hoje</p>
+      <h3>A árvore da família</h3>
+      <p class="arvore-sub">De uma raiz nas montanhas de Belluno, uma família inteira. Este é o caminho que desceu da Itália até o vô Vitório e a vó Maria — e os ramos que floresceram deles.</p>
+
+      <ol class="tronco">
+        <li><div class="casal"><strong>Bernardino Schiocchet</strong> &amp; Giovana Francescon</div></li>
+        <li><div class="casal"><strong>Giovanni Schiocchet</strong> &amp; Antônia de Zulian<span class="lugar">de Lentiai · Belluno · Itália</span></div></li>
+        <li><div class="casal"><strong>Vittore Schiocchet</strong> &amp; Ângelica Bazzanella<span class="lugar">chegou da Itália em 1890</span></div></li>
+        <li><div class="casal"><strong>Arlindo Schiocchet</strong> &amp; Maria Moretti<span class="lugar">o nono e a nona</span></div></li>
+        <li class="destaque"><div class="casal"><strong>Vitório</strong> &amp; <strong>Maria</strong><span class="lugar">o vô e a vó — o coração deste álbum</span></div></li>
+      </ol>
+
+      <div class="descendentes">
+        <p class="raiz">De Vitório e Maria vieram cinco filhos — e a árvore deu flor:</p>
+        <div class="filhos-grade">
+          <div class="filho-card">
+            <h4>Carlos Alberto</h4>
+            <ul><li><span class="neto">Enzo Fernandes</span></li></ul>
+          </div>
+          <div class="filho-card">
+            <h4>Nevia Maria</h4>
+            <ul><li><span class="neto">Sabrina</span></li><li>e o bisneto <span class="neto">Victor</span></li></ul>
+          </div>
+          <div class="filho-card">
+            <h4>Marcos <span class="em-memoria">(em memória)</span></h4>
+          </div>
+          <div class="filho-card">
+            <h4>Rosemari</h4>
+            <ul><li><span class="neto">Jhon</span> <span style="font-style:italic">(de coração)</span></li></ul>
+          </div>
+          <div class="filho-card">
+            <h4>João Vitor</h4>
+            <ul><li><span class="neto">Luiz Eduardo</span></li><li><span class="neto">Davi</span></li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section id="travessia">
