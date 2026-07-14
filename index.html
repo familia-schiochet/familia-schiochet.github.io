@@ -534,17 +534,35 @@
     text-align: center; color: var(--tinta-suave);
     font-size: .8rem; opacity: .7; margin: 6px 0 0;
   }
+  .carrossel-caixa { position: relative; max-width: 1180px; margin: 4px auto 0; }
   .carrossel {
     display: flex; gap: 14px; overflow-x: auto;
     scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
     padding: 16px clamp(14px,4vw,28px) 26px;
-    margin: 4px auto 0; max-width: 1180px;
     scrollbar-width: thin; scrollbar-color: var(--linha) transparent;
+    cursor: grab;
   }
   .carrossel::-webkit-scrollbar { height: 8px; }
   .carrossel::-webkit-scrollbar-thumb { background: var(--linha); border-radius: 8px; }
-  .carrossel { cursor: grab; }
   .carrossel.arrastando { cursor: grabbing; scroll-behavior: auto; user-select: none; }
+  /* setas de navegação do carrossel (aparecem só no computador) */
+  .seta-carrossel {
+    display: none; position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 6; width: 46px; height: 46px; border-radius: 50%;
+    align-items: center; justify-content: center;
+    border: 1px solid var(--linha); background: var(--papel-carta); color: var(--latao-texto);
+    font-family: Georgia, serif; font-size: 1.9rem; line-height: 1; cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,.18); padding: 0 0 4px;
+  }
+  .seta-carrossel:hover { background: var(--papel); filter: brightness(1.04); }
+  .seta-carrossel:disabled { opacity: 0; pointer-events: none; }
+  .seta-esq { left: -6px; }
+  .seta-dir { right: -6px; }
+  @media (hover: hover) and (pointer: fine) {
+    .seta-carrossel { display: flex; }
+    .carrossel { scrollbar-width: none; }
+    .carrossel::-webkit-scrollbar { display: none; }
+  }
   .cartao-link {
     scroll-snap-align: start; flex: 0 0 auto;
     width: clamp(212px, 72vw, 262px);
@@ -647,19 +665,23 @@
 <div id="inicio">
   <p class="abre-inicio">Este é o nosso álbum de família. Toque num assunto para abrir — e volte ao início quando quiser.</p>
   <p class="dica-arraste" aria-hidden="true">↔ arraste para o lado (ou use a rodinha do mouse) para ver todos os assuntos</p>
-  <nav class="carrossel" aria-label="Assuntos do álbum">
-    <a class="cartao-link" href="#geracoes"><span class="thumb"><img loading="lazy" decoding="async" src="img/tres_geracoes.jpg" alt=""><span class="badge" aria-hidden="true">👪</span></span><span class="corpo"><span class="tit">As gerações</span><span class="teaser">Dos mais antigos aos ramos de hoje.</span></span></a>
-    <a class="cartao-link" href="#arvore"><span class="thumb"><img loading="lazy" decoding="async" src="img/nono_nona_retrato.jpg" alt=""><span class="badge" aria-hidden="true">🌳</span></span><span class="corpo"><span class="tit">A árvore</span><span class="teaser">A família desenhada, de Belluno até nós.</span></span></a>
-    <a class="cartao-link" href="#travessia"><span class="thumb"><img loading="lazy" decoding="async" src="img/mericiana.jpg" alt=""><span class="badge" aria-hidden="true">🌊</span></span><span class="corpo"><span class="tit">A travessia</span><span class="teaser">A viagem da Itália para o Brasil.</span></span></a>
-    <a class="cartao-link" href="#encontro"><span class="thumb"><img loading="lazy" decoding="async" src="img/casamento.jpg" alt=""><span class="badge" aria-hidden="true">💍</span></span><span class="corpo"><span class="tit">O encontro</span><span class="teaser">O namoro e o casamento do vô e da vó.</span></span></a>
-    <a class="cartao-link" href="#engenho"><span class="thumb"><img loading="lazy" decoding="async" src="img/casa_tombada.jpg" alt=""><span class="badge" aria-hidden="true">🏠</span></span><span class="corpo"><span class="tit">O engenho e a casa</span><span class="teaser">O melado, os doces e a casa tombada.</span></span></a>
-    <a class="cartao-link" href="#album"><span class="thumb"><img loading="lazy" decoding="async" src="img/grupo_familia.jpg" alt=""><span class="badge" aria-hidden="true">📸</span></span><span class="corpo"><span class="tit">Álbum de fotos</span><span class="teaser">As nossas fotos de família.</span></span></a>
-    <a class="cartao-link" href="#bodas-ouro"><span class="thumb"><img loading="lazy" decoding="async" src="img/bodas_principal.jpg" alt=""><span class="badge" aria-hidden="true">💛</span></span><span class="corpo"><span class="tit">Bodas de ouro</span><span class="teaser">Os 50 anos do nono e da nona.</span></span></a>
-    <a class="cartao-link" href="#documentos"><span class="thumb"><img loading="lazy" decoding="async" src="img/doc_casamento1965.jpg" alt=""><span class="badge" aria-hidden="true">📜</span></span><span class="corpo"><span class="tit">Documentos e lembranças</span><span class="teaser">Certidões e lembrancinhas guardadas.</span></span></a>
-    <a class="cartao-link" href="#quem-lembra"><span class="thumb"><img loading="lazy" decoding="async" src="img/vo_vo_familia_antiga.jpg" alt=""><span class="badge" aria-hidden="true">❓</span></span><span class="corpo"><span class="tit">Quem lembra?</span><span class="teaser">Perguntas que a família ajuda a responder.</span></span></a>
-    <a class="cartao-link" href="#receitas"><span class="thumb"><img loading="lazy" decoding="async" src="img/vo_maria_coracao.jpg" alt=""><span class="badge" aria-hidden="true">🍰</span></span><span class="corpo"><span class="tit">Receitas &amp; ditados</span><span class="teaser">A cuca da vó e o jeito de falar.</span></span></a>
-    <a class="cartao-link" href="#recados"><span class="thumb"><img loading="lazy" decoding="async" src="img/beijo_na_vo.jpg" alt=""><span class="badge" aria-hidden="true">💬</span></span><span class="corpo"><span class="tit">Deixe seu recado</span><span class="teaser">Mande um carinho, uma foto, uma história.</span></span></a>
-  </nav>
+  <div class="carrossel-caixa">
+    <button type="button" class="seta-carrossel seta-esq" aria-label="Ver assuntos anteriores">‹</button>
+    <nav class="carrossel" aria-label="Assuntos do álbum">
+    <a class="cartao-link" href="#geracoes"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_geracoes.jpg" alt=""><span class="badge" aria-hidden="true">👪</span></span><span class="corpo"><span class="tit">As gerações</span><span class="teaser">Dos mais antigos aos ramos de hoje.</span></span></a>
+    <a class="cartao-link" href="#arvore"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_arvore.jpg" alt=""><span class="badge" aria-hidden="true">🌳</span></span><span class="corpo"><span class="tit">A árvore</span><span class="teaser">A família desenhada, de Belluno até nós.</span></span></a>
+    <a class="cartao-link" href="#travessia"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_travessia.jpg" alt=""><span class="badge" aria-hidden="true">🌊</span></span><span class="corpo"><span class="tit">A travessia</span><span class="teaser">A viagem da Itália para o Brasil.</span></span></a>
+    <a class="cartao-link" href="#encontro"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_encontro.jpg" alt=""><span class="badge" aria-hidden="true">💍</span></span><span class="corpo"><span class="tit">O encontro</span><span class="teaser">O namoro e o casamento do vô e da vó.</span></span></a>
+    <a class="cartao-link" href="#engenho"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_engenho.jpg" alt=""><span class="badge" aria-hidden="true">🏠</span></span><span class="corpo"><span class="tit">O engenho e a casa</span><span class="teaser">O melado, os doces e a casa tombada.</span></span></a>
+    <a class="cartao-link" href="#album"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_album.jpg" alt=""><span class="badge" aria-hidden="true">📸</span></span><span class="corpo"><span class="tit">Álbum de fotos</span><span class="teaser">As nossas fotos de família.</span></span></a>
+    <a class="cartao-link" href="#bodas-ouro"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_bodas.jpg" alt=""><span class="badge" aria-hidden="true">💛</span></span><span class="corpo"><span class="tit">Bodas de ouro</span><span class="teaser">Os 50 anos do nono e da nona.</span></span></a>
+    <a class="cartao-link" href="#documentos"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_documentos.jpg" alt=""><span class="badge" aria-hidden="true">📜</span></span><span class="corpo"><span class="tit">Documentos e lembranças</span><span class="teaser">Certidões e lembrancinhas guardadas.</span></span></a>
+    <a class="cartao-link" href="#quem-lembra"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_quemlembra.jpg" alt=""><span class="badge" aria-hidden="true">❓</span></span><span class="corpo"><span class="tit">Quem lembra?</span><span class="teaser">Perguntas que a família ajuda a responder.</span></span></a>
+    <a class="cartao-link" href="#receitas"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_receitas.jpg" alt=""><span class="badge" aria-hidden="true">🍰</span></span><span class="corpo"><span class="tit">Receitas &amp; ditados</span><span class="teaser">A cuca da vó e o jeito de falar.</span></span></a>
+    <a class="cartao-link" href="#recados"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_recados.jpg" alt=""><span class="badge" aria-hidden="true">💬</span></span><span class="corpo"><span class="tit">Deixe seu recado</span><span class="teaser">Mande um carinho, uma foto, uma história.</span></span></a>
+    </nav>
+    <button type="button" class="seta-carrossel seta-dir" aria-label="Ver mais assuntos">›</button>
+  </div>
   <div class="carta">
     <p>Este álbum é uma homenagem — aos que vieram antes de nós, e a todos que ainda vão chegar. Ele está sempre em construção, feito com carinho, no ritmo tranquilo das lembranças.</p>
     <p>Cada espaço vazio que você encontrar aqui é um convite: uma foto que ainda vai chegar, uma história que alguém da família ainda vai contar, um nome que alguém ainda lembra. Aos poucos, as páginas vão se enchendo — do jeito que as coisas boas crescem: devagar e com carinho.</p>
@@ -1561,9 +1583,14 @@
 })();
 
 (function () {
-  // Carrossel: arrastar com o mouse + roda do mouse rola para o lado.
+  // Carrossel: rodinha do mouse + arrastar + setas (no computador). No celular fica só o toque.
   var c = document.querySelector('.carrossel');
   if (!c) return;
+  var caixa = c.closest('.carrossel-caixa');
+  var setaE = caixa && caixa.querySelector('.seta-esq');
+  var setaD = caixa && caixa.querySelector('.seta-dir');
+
+  // arrastar com o mouse
   var down = false, moved = false, startX = 0, startScroll = 0;
   c.addEventListener('mousedown', function (e) {
     if (e.button !== 0) return;
@@ -1586,12 +1613,34 @@
   c.addEventListener('click', function (e) {
     if (moved) { e.preventDefault(); e.stopPropagation(); }
   }, true);
-  // roda do mouse na vertical -> rola o carrossel na horizontal
+
+  // roda do mouse -> rola o carrossel na horizontal (libera a página nas pontas)
   c.addEventListener('wheel', function (e) {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      c.scrollLeft += e.deltaY; e.preventDefault();
-    }
+    var delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    if (!delta) return;
+    var noComeco = c.scrollLeft <= 0;
+    var noFim = c.scrollLeft + c.clientWidth >= c.scrollWidth - 1;
+    if ((delta < 0 && noComeco) || (delta > 0 && noFim)) return;
+    c.scrollLeft += delta;
+    e.preventDefault();
   }, { passive: false });
+
+  // setas ‹ › (só no computador)
+  function umPasso() {
+    var card = c.querySelector('.cartao-link');
+    return card ? (card.getBoundingClientRect().width + 14) : 240;
+  }
+  function rolar(dir) { c.scrollBy({ left: dir * umPasso() * 2, behavior: 'smooth' }); }
+  if (setaE) setaE.addEventListener('click', function () { rolar(-1); });
+  if (setaD) setaD.addEventListener('click', function () { rolar(1); });
+  function att() {
+    if (!setaE || !setaD) return;
+    setaE.disabled = c.scrollLeft <= 2;
+    setaD.disabled = c.scrollLeft + c.clientWidth >= c.scrollWidth - 2;
+  }
+  c.addEventListener('scroll', att, { passive: true });
+  window.addEventListener('resize', att);
+  att();
 })();
 </script>
 
