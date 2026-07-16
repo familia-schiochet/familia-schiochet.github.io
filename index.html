@@ -777,6 +777,15 @@
   .btn-ajuda:hover { filter: brightness(1.05); }
   .btn-ajuda:focus-visible { outline: 2px solid var(--latao); outline-offset: 2px; }
   #btn-topo { display: none; font-size: 1.5rem; }
+  #btn-ouvir { font-size: 1.35rem; }
+  #btn-ouvir.falando { background: var(--latao); color: #1B2C21; }
+  @media (prefers-reduced-motion: no-preference) {
+    #btn-ouvir.falando { animation: pulsar 1.8s ease-in-out infinite; }
+    @keyframes pulsar {
+      0%, 100% { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22); }
+      50% { box-shadow: 0 0 24px rgba(201, 160, 80, 0.9); }
+    }
+  }
   .barra-voltar .barra-titulo {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 1.25rem; color: var(--sobre-capa);
@@ -2053,7 +2062,7 @@
   </svg>
   <p>Um álbum vivo, sempre em construção — feito pela família, com amor.</p>
   <p>Feito com carinho, devagarinho, como se guarda o que importa.</p>
-  <p>Última atualização: 15 de julho de 2026</p>
+  <p>Última atualização: 16 de julho de 2026</p>
   <p style="margin-top:18px"><a href="#" onclick="history.back();return false;" class="voltar-rodape" style="display:none;color:var(--latao-texto);text-decoration:none;border-bottom:1px solid rgba(165,119,42,.4);padding-bottom:2px">↑ Voltar ao início</a></p>
 </footer>
 
@@ -2184,6 +2193,7 @@
 </script>
 
 <div class="botoes-ajuda">
+  <button type="button" class="btn-ajuda" id="btn-ouvir" title="Ouvir esta página em voz alta" aria-label="Ouvir esta página em voz alta">🔊</button>
   <button type="button" class="btn-ajuda" id="btn-letra" title="Tamanho da letra" aria-label="Aumentar o tamanho da letra">Aa</button>
   <button type="button" class="btn-ajuda" id="btn-topo" title="Voltar ao começo" aria-label="Voltar ao começo da página">↑</button>
 </div>
@@ -2213,6 +2223,100 @@
   btnT.addEventListener('click', function () {
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
   });
+})();
+
+(function () {
+  // Modo ouvir: o site lê a página em voz alta (voz do próprio aparelho)
+  var btn = document.getElementById('btn-ouvir');
+  if (!btn) return;
+  if (!('speechSynthesis' in window) || !window.SpeechSynthesisUtterance) {
+    btn.style.display = 'none';
+    return;
+  }
+  var sint = window.speechSynthesis;
+  var falando = false;
+  var fila = [];
+
+  function vozPortugues() {
+    var vozes = sint.getVoices();
+    var meiaBoa = null;
+    for (var i = 0; i < vozes.length; i++) {
+      var l = (vozes[i].lang || '').toLowerCase().replace('_', '-');
+      if (l.indexOf('pt-br') === 0) return vozes[i];
+      if (!meiaBoa && l.indexOf('pt') === 0) meiaBoa = vozes[i];
+    }
+    return meiaBoa;
+  }
+  try { sint.getVoices(); sint.onvoiceschanged = function () {}; } catch (e) {}
+
+  function limpa(t) {
+    t = t.replace(/\s+/g, ' ');
+    try {
+      t = t.replace(new RegExp('[\\u{1F000}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u2190-\\u21FF\\u{FE0F}\\u2022\\u00B7]', 'gu'), ' ');
+    } catch (e) {}
+    return t.trim();
+  }
+
+  function textoDaTela() {
+    var secao = document.querySelector('body.navegando main.pagina > section.ativa');
+    if (secao) return secao.innerText;
+    var partes = [];
+    var capa = document.querySelector('.capa-moldura-interna');
+    if (capa) partes.push(capa.innerText);
+    var carta = document.querySelector('#inicio .carta');
+    if (carta) partes.push(carta.innerText);
+    return partes.join('. ');
+  }
+
+  function emPedacos(t) {
+    t = limpa(t);
+    var frases = t.match(/[^.!?…]+[.!?…]*\s*/g) || [t];
+    var lote = [], atual = '';
+    for (var i = 0; i < frases.length; i++) {
+      if (atual && (atual + frases[i]).length > 180) { lote.push(atual); atual = ''; }
+      atual += frases[i];
+    }
+    if (atual.replace(/\s/g, '')) lote.push(atual);
+    return lote;
+  }
+
+  function parar() {
+    falando = false;
+    fila = [];
+    try { sint.cancel(); } catch (e) {}
+    btn.classList.remove('falando');
+    btn.textContent = '🔊';
+    btn.title = 'Ouvir esta página em voz alta';
+  }
+
+  function falaProxima() {
+    if (!falando) return;
+    if (!fila.length) { parar(); return; }
+    var u = new SpeechSynthesisUtterance(fila.shift());
+    u.lang = 'pt-BR';
+    u.rate = 0.95;
+    var v = vozPortugues();
+    if (v) u.voice = v;
+    u.onend = falaProxima;
+    u.onerror = falaProxima;
+    sint.speak(u);
+  }
+
+  btn.addEventListener('click', function () {
+    if (falando) { parar(); return; }
+    var texto = textoDaTela();
+    if (!texto) return;
+    falando = true;
+    btn.classList.add('falando');
+    btn.textContent = '⏹';
+    btn.title = 'Parar a leitura';
+    try { sint.cancel(); } catch (e) {}
+    fila = emPedacos(texto);
+    falaProxima();
+  });
+
+  window.addEventListener('hashchange', parar);
+  window.addEventListener('beforeunload', function () { try { sint.cancel(); } catch (e) {} });
 })();
 </script>
 
