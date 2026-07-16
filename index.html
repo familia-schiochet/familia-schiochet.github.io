@@ -219,6 +219,8 @@
   .capa-caminho::before { background: linear-gradient(90deg, transparent, rgba(201, 160, 80, 0.6)); }
   .capa-caminho::after { background: linear-gradient(270deg, transparent, rgba(201, 160, 80, 0.6)); }
   .capa-caminho i { font-style: normal; opacity: 0.65; }
+  a.capa-caminho { text-decoration: none; }
+  a.capa-caminho:hover span { text-decoration: underline; text-underline-offset: 4px; }
   .capa-caminho-nota {
     margin: 6px auto 0;
     font-style: italic;
@@ -230,6 +232,53 @@
     font-size: 0.9rem;
     opacity: 0.75;
   }
+
+  /* ── O caminho da família (mapa desenhado) ───── */
+  .mapa-moldura {
+    background: var(--papel-carta);
+    border: 1px solid var(--linha);
+    padding: clamp(8px, 2vw, 18px);
+    margin-top: 26px;
+  }
+  .mapa-caminho { display: block; width: 100%; height: auto; }
+  .mapa-caminho .terra { fill: var(--papel); stroke: var(--cantoneira); stroke-width: 1.3; }
+  .mapa-caminho .rota { fill: none; stroke: var(--latao); stroke-width: 2.2; stroke-dasharray: 1 8; stroke-linecap: round; }
+  .mapa-caminho .cidade { fill: var(--latao-texto); stroke: var(--papel-carta); stroke-width: 1.5; }
+  .mapa-caminho .rotulo-pais {
+    font-family: 'Segoe UI', -apple-system, Roboto, sans-serif;
+    font-size: 13.5px; font-weight: 600; letter-spacing: 0.2em; fill: var(--tinta-suave);
+  }
+  .mapa-caminho .rotulo-cidade { font-family: Georgia, serif; font-style: italic; font-size: 17px; fill: var(--tinta); }
+  .mapa-caminho .agua { fill: none; stroke: var(--linha); stroke-width: 1.2; opacity: 0.9; }
+  .mapa-caminho .oceano-nome {
+    font-family: Georgia, serif; font-style: italic; font-size: 17px;
+    letter-spacing: 0.35em; fill: var(--tinta-suave); opacity: 0.75;
+  }
+  .mapa-caminho .navio-casco { fill: var(--latao-texto); }
+  .mapa-caminho .navio-vela { fill: var(--latao); }
+  .mapa-caminho .navio-mastro { stroke: var(--latao-texto); stroke-width: 1.6; }
+  @media (prefers-reduced-motion: no-preference) {
+    .mapa-caminho .rota { animation: navegar 75s linear infinite; }
+    @keyframes navegar { to { stroke-dashoffset: -540; } }
+    .mapa-caminho .navio { transform-box: fill-box; transform-origin: center; animation: balancar 7s ease-in-out infinite; }
+    @keyframes balancar {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-3px) rotate(2deg); }
+    }
+  }
+  .paradas { list-style: none; counter-reset: parada; margin: 30px 0 0; padding: 0; display: grid; gap: 18px; }
+  .paradas li { counter-increment: parada; display: grid; grid-template-columns: 46px 1fr; gap: 14px; align-items: start; }
+  .paradas li::before {
+    content: counter(parada);
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.7rem;
+    color: var(--latao-texto); background: var(--papel-carta);
+    border: 1px solid var(--linha); border-radius: 50%;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .paradas p { margin: 4px 0 0; }
+  .paradas .bandeira { display: inline-block; width: 20px; height: 13px; margin-right: 7px; vertical-align: -1px; }
+  .paradas strong { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; }
   .indice {
     display: flex;
     flex-wrap: wrap;
@@ -765,8 +814,8 @@
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
       </svg>
       <p class="capa-sub" style="font-size:1rem;opacity:0.88;margin-top:4px">A vocês, com todo o amor da sua neta.</p>
-      <p class="capa-caminho"><span>Belluno</span><i>·</i><span>Açores</span><i>·</i><span>Corupá</span><i>·</i><span>Jaraguá do Sul</span></p>
-      <p class="capa-caminho-nota">o caminho que a nossa família percorreu até chegar aqui</p>
+      <a class="capa-caminho" href="#caminho"><span>Belluno</span><i>·</i><span>Açores</span><i>·</i><span>Corupá</span><i>·</i><span>Jaraguá do Sul</span></a>
+      <p class="capa-caminho-nota">o caminho que a nossa família percorreu até chegar aqui — toque para ver no mapa</p>
       <p class="capa-data">Um álbum de família, sempre em construção · desde julho de 2026</p>
     </div>
   </div>
@@ -785,6 +834,7 @@
     <nav class="carrossel" aria-label="Assuntos do álbum">
     <a class="cartao-link" href="#geracoes"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_geracoes.jpg" alt=""><span class="badge" aria-hidden="true">👪</span></span><span class="corpo"><span class="tit">As gerações</span><span class="teaser">Dos mais antigos aos ramos de hoje.</span></span></a>
     <a class="cartao-link" href="#arvore"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_arvore.jpg" alt=""><span class="badge" aria-hidden="true">🌳</span></span><span class="corpo"><span class="tit">A árvore</span><span class="teaser">A família desenhada, de Belluno até nós.</span></span></a>
+    <a class="cartao-link" href="#caminho"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_caminho.jpg" alt=""><span class="badge" aria-hidden="true">🧭</span></span><span class="corpo"><span class="tit">O caminho</span><span class="teaser">O mapa: da Itália e dos Açores até nós.</span></span></a>
     <a class="cartao-link" href="#travessia"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_travessia.jpg" alt=""><span class="badge" aria-hidden="true">🌊</span></span><span class="corpo"><span class="tit">A travessia</span><span class="teaser">A viagem da Itália para o Brasil.</span></span></a>
     <a class="cartao-link" href="#encontro"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_encontro.jpg" alt=""><span class="badge" aria-hidden="true">💍</span></span><span class="corpo"><span class="tit">O encontro</span><span class="teaser">O namoro e o casamento do vô e da vó.</span></span></a>
     <a class="cartao-link" href="#engenho"><span class="thumb"><img loading="lazy" decoding="async" src="img/card_engenho.jpg" alt=""><span class="badge" aria-hidden="true">🏠</span></span><span class="corpo"><span class="tit">O engenho e a casa</span><span class="teaser">O melado, os doces e a casa tombada.</span></span></a>
@@ -1082,6 +1132,92 @@
         <p class="arvore-sub" style="font-size:0.82rem;opacity:0.8;margin-top:18px">Linhagem Garcia levantada a partir de registros da Cúria de Florianópolis, do Arquivo de Angra do Heroísmo (Açores) e da Torre do Tombo (Lisboa).</p>
       </div>
     </div>
+  </section>
+
+  <section id="caminho">
+    <p class="rotulo">Para se situar</p>
+    <h2>O caminho da família</h2>
+    <p class="abertura-secao">Antes dos capítulos, o mapa: quatro lugares contam de onde viemos e onde criamos raiz. As linhas pontilhadas são as viagens de navio — repare que elas se movem devagarinho, como o mar.</p>
+    <div class="mapa-moldura">
+      <svg class="mapa-caminho" viewBox="0 0 900 540" role="img" aria-label="Mapa desenhado à moda antiga mostrando as viagens da família: da Itália e das ilhas dos Açores, atravessando o oceano Atlântico, até Santa Catarina, no Brasil.">
+        <!-- Brasil (costa de Santa Catarina) -->
+        <path class="terra" d="M 0,120 C 60,140 120,190 150,260 C 175,320 172,380 150,430 C 132,472 105,505 88,540 L 0,540 Z"/>
+        <text class="rotulo-pais" x="30" y="245">BRASIL</text>
+        <!-- bandeira do Brasil -->
+        <g transform="translate(30,262)">
+          <rect width="30" height="20" fill="#4E9B63" stroke="rgba(0,0,0,.15)"/>
+          <path d="M 15,3 L 26,10 L 15,17 L 4,10 Z" fill="#D8B54A"/>
+          <circle cx="15" cy="10" r="4" fill="#35507A"/>
+        </g>
+        <!-- Itália (a bota) -->
+        <path class="terra" d="M 812,52 L 842,66 L 848,96 L 838,120 L 852,150 L 876,186 L 884,214 L 868,224 L 850,205 L 836,172 L 818,140 L 802,112 L 796,80 Z"/>
+        <text class="rotulo-pais" x="836" y="252" text-anchor="middle">ITÁLIA</text>
+        <!-- bandeira da Itália -->
+        <g transform="translate(742,44)">
+          <rect width="10" height="20" fill="#4E9B63"/>
+          <rect x="10" width="10" height="20" fill="#F1EBDD"/>
+          <rect x="20" width="10" height="20" fill="#C34A44"/>
+          <rect width="30" height="20" fill="none" stroke="rgba(0,0,0,.15)"/>
+        </g>
+        <!-- Portugal -->
+        <path class="terra" d="M 648,140 C 672,128 700,130 714,148 C 726,164 722,188 706,200 C 688,214 660,212 646,196 C 634,182 634,154 648,140 Z"/>
+        <text class="rotulo-pais" x="682" y="232" text-anchor="middle">PORTUGAL</text>
+        <!-- Açores (as ilhas) -->
+        <circle class="terra" cx="470" cy="250" r="4"/>
+        <circle class="terra" cx="488" cy="242" r="2.6"/>
+        <circle class="terra" cx="455" cy="243" r="2.3"/>
+        <circle class="terra" cx="479" cy="262" r="2.1"/>
+        <circle class="terra" cx="461" cy="266" r="2.5"/>
+        <text class="rotulo-pais" x="470" y="294" text-anchor="middle">AÇORES</text>
+        <!-- bandeira de Portugal -->
+        <g transform="translate(496,214)">
+          <rect width="12" height="20" fill="#4E9B63"/>
+          <rect x="12" width="18" height="20" fill="#C34A44"/>
+          <circle cx="12" cy="10" r="3.4" fill="#D8B54A"/>
+          <rect width="30" height="20" fill="none" stroke="rgba(0,0,0,.15)"/>
+        </g>
+        <!-- as duas viagens (linhas pontilhadas) -->
+        <path class="rota" d="M 806,96 C 760,150 700,240 600,280 C 500,320 320,335 178,332"/>
+        <path class="rota" d="M 462,272 C 380,305 270,325 178,336"/>
+        <!-- o navio (o grupo de fora dá o lugar; o de dentro balança) -->
+        <g transform="translate(580,282)">
+          <g class="navio">
+            <path class="navio-casco" d="M -16,18 L 16,18 L 10,26 L -10,26 Z"/>
+            <line class="navio-mastro" x1="0" y1="18" x2="0" y2="-8"/>
+            <path class="navio-vela" d="M 2,-8 C 12,-2 12,8 2,15 Z"/>
+            <path class="navio-vela" d="M -2,-4 C -10,1 -10,9 -2,14 Z" opacity="0.8"/>
+          </g>
+        </g>
+        <!-- cidades -->
+        <circle class="cidade" cx="824" cy="74" r="4.5"/>
+        <text class="rotulo-cidade" x="814" y="66" text-anchor="end">Belluno</text>
+        <circle class="cidade" cx="168" cy="330" r="4.5"/>
+        <text class="rotulo-cidade" x="180" y="322">S. Francisco do Sul</text>
+        <circle class="cidade" cx="106" cy="376" r="4.5"/>
+        <text class="rotulo-cidade" x="118" y="381">Corupá</text>
+        <circle class="cidade" cx="120" cy="420" r="4.5"/>
+        <text class="rotulo-cidade" x="132" y="425">Jaraguá do Sul</text>
+        <!-- enfeites do mar -->
+        <g class="bussola" transform="translate(260,84)">
+          <circle r="20" class="agua"/>
+          <path d="M 0,-15 L 4,0 L 0,15 L -4,0 Z" fill="#C9A050" opacity="0.85"/>
+          <path d="M -15,0 L 0,4 L 15,0 L 0,-4 Z" fill="#C9B58A" opacity="0.7"/>
+          <text y="-27" text-anchor="middle" class="rotulo-pais" style="letter-spacing:.05em">N</text>
+        </g>
+        <text class="oceano-nome" x="470" y="176" text-anchor="middle">OCEANO ATLÂNTICO</text>
+        <path class="agua" d="M 320,210 q 8,-6 16,0 q 8,6 16,0"/>
+        <path class="agua" d="M 610,180 q 8,-6 16,0 q 8,6 16,0"/>
+        <path class="agua" d="M 340,420 q 8,-6 16,0 q 8,6 16,0"/>
+        <path class="agua" d="M 560,400 q 8,-6 16,0 q 8,6 16,0"/>
+        <path class="agua" d="M 250,480 q 8,-6 16,0 q 8,6 16,0"/>
+      </svg>
+    </div>
+    <ol class="paradas">
+      <li><p><svg class="bandeira" viewBox="0 0 30 20" aria-hidden="true"><rect width="10" height="20" fill="#4E9B63"/><rect x="10" width="10" height="20" fill="#F1EBDD"/><rect x="20" width="10" height="20" fill="#C34A44"/></svg><strong>Belluno</strong> — a cidadezinha nas montanhas do norte da Itália de onde saiu a família do vô Vitório. Foi de lá que o bisavô Vittore, com 13 anos, embarcou no navio <em>Adria</em>.</p></li>
+      <li><p><svg class="bandeira" viewBox="0 0 30 20" aria-hidden="true"><rect width="12" height="20" fill="#4E9B63"/><rect x="12" width="18" height="20" fill="#C34A44"/><circle cx="12" cy="10" r="3.4" fill="#D8B54A"/></svg><strong>Açores</strong> — ilhas de Portugal, no meio do oceano. Foi de lá que veio, há muito tempo, a família da vó Maria — os Garcia, que chegaram ao litoral de Santa Catarina ainda no tempo das caravelas.</p></li>
+      <li><p><svg class="bandeira" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#4E9B63"/><path d="M 15,3 L 26,10 L 15,17 L 4,10 Z" fill="#D8B54A"/><circle cx="15" cy="10" r="4" fill="#35507A"/></svg><strong>Corupá</strong> — onde a vó Maria nasceu e onde o vô e a vó casaram, na Igreja São José, em 1965.</p></li>
+      <li><p><svg class="bandeira" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#4E9B63"/><path d="M 15,3 L 26,10 L 15,17 L 4,10 Z" fill="#D8B54A"/><circle cx="15" cy="10" r="4" fill="#35507A"/></svg><strong>Jaraguá do Sul</strong> — onde fica a casa tombada, em Nereu Ramos, e onde a família vive até hoje.</p></li>
+    </ol>
   </section>
 
   <section id="travessia">
