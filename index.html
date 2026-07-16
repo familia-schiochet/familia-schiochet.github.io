@@ -515,6 +515,8 @@
   }
   #album figure.sem-numero { counter-increment: none; }
   #album figure.sem-numero > figcaption::before { content: "Vídeo"; }
+  #album figure.album-antigo { counter-increment: none; }
+  #album figure.album-antigo > figcaption::before { content: "Álbum antigo"; }
   /* numeração própria da seção das bodas de ouro */
   #bodas-ouro { counter-reset: bfoto; }
   #bodas-ouro figure { counter-increment: bfoto; }
@@ -843,6 +845,75 @@
     position: absolute; bottom: 14px; left: 0; right: 0;
     text-align: center; color: rgba(255,255,255,.72); font-size: .85rem;
   }
+
+  /* ══ Convite: mandar o álbum pra família pelo WhatsApp ══ */
+  .compartilhar-zap { text-align: center; margin: 34px auto 8px; }
+  .compartilhar-zap .pergunta-zap {
+    font-size: 0.95rem; color: var(--tinta-suave); font-style: italic; margin: 0 0 12px;
+  }
+  .btn-zap {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+    background: var(--papel-carta); border: 1px solid var(--latao); border-radius: 30px;
+    padding: 13px 26px; color: var(--latao-texto);
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.2rem; transition: background 0.2s;
+  }
+  .btn-zap:hover { background: var(--papel); }
+  .btn-zap svg { width: 21px; height: 21px; flex: none; }
+
+  /* ══ Linkzinho "como usar" na tela inicial ══ */
+  .link-guia { text-align: center; margin: -4px 0 20px; font-size: 0.92rem; }
+  .link-guia a {
+    color: var(--latao-texto); text-decoration: none;
+    border-bottom: 1px dotted rgba(165,119,42,.55); padding-bottom: 1px;
+  }
+  .link-guia a:hover { border-bottom-style: solid; }
+
+  /* ══ Pagininha "Como usar o álbum" ══ */
+  .guia-lista { list-style: none; padding: 0; max-width: 44em; margin: 30px auto 0; display: flex; flex-direction: column; gap: 24px; }
+  .guia-lista li { display: flex; align-items: flex-start; gap: 18px; }
+  .guia-ic {
+    flex: none; width: 54px; height: 54px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--papel-carta); border: 1px solid var(--linha);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.14);
+    font-family: Georgia, serif; font-size: 1.15rem; font-weight: bold; color: var(--latao-texto);
+  }
+  .guia-lista .txt { padding-top: 3px; line-height: 1.55; }
+  .guia-lista .txt strong {
+    display: block; margin-bottom: 2px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.22rem; font-weight: 600; color: var(--latao-texto);
+  }
+  .guia-nota-fim {
+    max-width: 40em; margin: 36px auto 0; text-align: center; font-style: italic;
+    color: var(--tinta-suave); border-top: 1px solid var(--linha); padding-top: 18px;
+  }
+
+  /* ══ Botão de imprimir o capítulo (na barra de cima) ══ */
+  .btn-imprimir {
+    margin-left: auto; cursor: pointer;
+    background: transparent; color: var(--sobre-capa);
+    border: 1px solid rgba(201,160,80,.65); border-radius: 999px;
+    font-family: Georgia, serif; font-size: 0.92rem;
+    padding: 9px 18px; white-space: nowrap;
+  }
+  .btn-imprimir:hover { background: rgba(201,160,80,.18); }
+  .btn-imprimir:focus-visible { outline: 2px solid var(--latao-capa); outline-offset: 2px; }
+
+  /* ══ Impressão: papel limpo, tinta escura, sem botões ══ */
+  .so-impressao { display: none; }
+  @media print {
+    :root, :root[data-theme="light"], :root[data-theme="dark"] {
+      --papel: #fff; --papel-carta: #fff; --tinta: #1c1a17; --tinta-suave: #55503f;
+      --latao: #7E5B1D; --latao-texto: #5c4315; --linha: #c9c2ae; --cantoneira: #9c8757;
+    }
+    body { background: #fff; }
+    .botoes-ajuda, .barra-voltar, .lightbox, .seta-carrossel, .dica-arraste,
+    .compartilhar-zap, .link-guia, .responder, .voltar-rodape { display: none !important; }
+    main.pagina > section.ativa { animation: none !important; }
+    .foto, figure { break-inside: avoid; page-break-inside: avoid; }
+    .so-impressao { display: block; font-size: 0.85rem; color: var(--tinta-suave); }
+  }
 </style>
 <script>document.documentElement.classList.add('js');</script>
 
@@ -862,8 +933,8 @@
         <path fill="#C9A050" d="M36 34 C 26 34, 16 28, 13 15 C 25 16, 34 23, 36 34 Z"/>
         <path fill="#C9A050" d="M36 29 C 46 29, 56 23, 59 10 C 47 11, 38 18, 36 29 Z"/>
       </svg>
-      <p class="capa-sub" style="font-size:1rem;opacity:0.88;margin-top:4px">Este álbum é a homenagem de uma neta ao vô e à vó — e uma semente plantada para a família: um lugar para lembrar, pesquisar e continuar a nossa história.</p>
-      <p class="capa-assinatura">— Sabrina, a primeira neta</p>
+      <p class="capa-sub" style="font-size:1rem;opacity:0.88;margin-top:4px">Este álbum começa com a ideia de uma homenagem de uma neta aos seus avós. É uma semente plantada para a família: um lugar para lembrar, pesquisar e continuar a nossa história.</p>
+      <p class="capa-assinatura">Com carinho, Sabrina</p>
       <a class="capa-caminho" href="#caminho"><span>Belluno</span><i>·</i><span>Açores</span><i>·</i><span>Corupá</span><i>·</i><span>Jaraguá do Sul</span></a>
       <p class="capa-caminho-nota">o caminho que a nossa família percorreu até chegar aqui — toque para ver no mapa</p>
       <p class="capa-data">Um álbum de família, sempre em construção · desde julho de 2026</p>
@@ -874,10 +945,12 @@
 <nav class="barra-voltar" aria-label="Voltar ao início">
   <a class="btn-voltar" href="#" onclick="history.back();return false;">← Início</a>
   <span class="barra-titulo">Maria <span class="e">&amp;</span> Vitório</span>
+  <button type="button" class="btn-imprimir" onclick="window.print()" title="Imprimir este capítulo">🖨&nbsp;Imprimir</button>
 </nav>
 
 <div id="inicio">
   <p class="abre-inicio">Este é o nosso álbum de família. Toque num assunto para abrir — e volte ao início quando quiser.</p>
+  <p class="link-guia"><a href="#como-usar">Primeira vez por aqui? Veja como usar o álbum</a></p>
   <p class="dica-arraste" aria-hidden="true">↔ arraste para o lado (ou use a rodinha do mouse) para ver todos os assuntos</p>
   <div class="carrossel-caixa">
     <button type="button" class="seta-carrossel seta-esq" aria-label="Ver assuntos anteriores">‹</button>
@@ -902,6 +975,13 @@
     <p>Este álbum é uma homenagem — aos que vieram antes de nós, e a todos que ainda vão chegar. Ele está sempre em construção, feito com carinho, no ritmo tranquilo das lembranças.</p>
     <p>Cada espaço vazio que você encontrar aqui é um convite: uma foto que ainda vai chegar, uma história que alguém da família ainda vai contar, um nome que alguém ainda lembra. Aos poucos, as páginas vão se enchendo — do jeito que as coisas boas crescem: devagar e com carinho.</p>
     <p class="assinatura">Se você chegou até aqui, é porque faz parte desta história.</p>
+  </div>
+  <div class="compartilhar-zap">
+    <p class="pergunta-zap">Conhece alguém da família que ia gostar de ver este álbum?</p>
+    <a class="btn-zap" href="https://wa.me/?text=Venha%20conhecer%20o%20%C3%A1lbum%20da%20nossa%20fam%C3%ADlia%20Schiochet%20e%20Moretti%20%F0%9F%92%9B%20As%20fotos%20e%20as%20hist%C3%B3rias%20do%20v%C3%B4%20Vit%C3%B3rio%20e%20da%20v%C3%B3%20Maria%20est%C3%A3o%20aqui%3A%20https%3A%2F%2Ffamilia-schiochet.github.io%2F" target="_blank" rel="noopener">
+      <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+      Mandar o álbum pelo WhatsApp
+    </a>
   </div>
 </div>
 
@@ -1446,6 +1526,20 @@
         </div>
         <figcaption>O vô Vitório com o bisneto Victor, ainda pequeno e fantasiado, e a Sabrina — o bisavô e o menino que leva o nome dele.</figcaption>
       </figure>
+      <figure class="album-antigo">
+        <div class="foto">
+          <i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i>
+          <img loading="lazy" decoding="async" src="img/quatro_geracoes.jpg" alt="A família reunida na igreja: quatro gerações juntas, com a pequena Sabrina de vestido branco na frente">
+        </div>
+        <figcaption>Quatro gerações numa foto só, na igreja: a Nevia, o tio João Vitor, o vô Vitório, a nona Maria, o nono Arlindo, a vó Maria — com a tia Rose logo atrás — e o tio Carlos. E na frente, de vestidinho branco, a Sabrina, ainda menina.</figcaption>
+      </figure>
+      <figure class="album-antigo">
+        <div class="foto">
+          <i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i>
+          <img loading="lazy" decoding="async" src="img/carmela_nono_nona.jpg" alt="O nono Arlindo e a nona Maria na igreja com a filha Carmela, de hábito religioso">
+        </div>
+        <figcaption>O nono Arlindo e a nona Maria com a filha Carmela, a irmã religiosa do vô Vitório. No álbum antigo, a legenda escrita à mão diz: “Arlindo e Maria com a filha religiosa, Carmélia”.</figcaption>
+      </figure>
     </div>
 
     <details class="mais-fotos">
@@ -1935,7 +2029,7 @@
     </div>
     <p class="nota-album" style="margin-top:16px">Nos documentos oficiais, cobrimos com uma tarja os números que alguém poderia copiar — CPF, números de registro e a impressão digital. Assim a lembrança fica à vista, mas a família fica protegida. Os originais estão guardados em segurança.</p>
     <details class="mais-fotos" id="mais-documentos">
-      <summary><span class="seta">›</span> <span class="abrir">Ver todos os documentos e lembranças</span><span class="fechar">Fechar</span> <span class="conta">(mais 30 itens)</span></summary>
+      <summary><span class="seta">›</span> <span class="abrir">Ver todos os documentos e lembranças</span><span class="fechar">Fechar</span> <span class="conta">(mais 32 itens)</span></summary>
 
       <p class="nota-album" style="margin:22px 0 4px">Lembranças de fé — a Primeira Comunhão da própria vó Maria, e os batizados, primeiras comunhões e crismas dos filhos.</p>
       <div class="grade-album">
@@ -1953,6 +2047,8 @@
       <p class="nota-album" style="margin:26px 0 4px">Documentos da família — guardados desde os tempos do vô Vitório.</p>
       <div class="grade-album">
         <figure><div class="foto"><i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i><img loading="lazy" decoding="async" src="img/doc_militar.jpg" alt="Certificado militar do vô Vitório, 1941"></div><figcaption>O certificado militar do vô Vitório, de 1941 — traz o nome dele, o dos pais (Arlindo e Maria) e a data de nascimento: 19 de agosto de 1941.</figcaption></figure>
+        <figure><div class="foto"><i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i><img loading="lazy" decoding="async" src="img/quitacao_nono_frente.jpg" alt="Quitação Escolar do nono Arlindo, 1940 — a capa, com a fotografia dele bem rapaz, de bigode" style="object-position:left center"></div><figcaption>A <strong>Quitação Escolar do nono Arlindo</strong> — 1940. E na fotografia, um tesouro: o nono bem rapaz, de bigode.</figcaption></figure>
+        <figure><div class="foto"><i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i><img loading="lazy" decoding="async" src="img/quitacao_nono_dentro.jpg" alt="Quitação Escolar do nono Arlindo, 1940 — por dentro, preenchida à mão"></div><figcaption>Por dentro, o papel conta quem ele era em 1940: brasileiro, casado, lavrador, reservista — morador da Estrada Itapocú, na Barra do Ribeirão Grande, Jaraguá. O nome saiu escrito “Alindio”, do jeito que se escrevia de ouvido naquele tempo.</figcaption></figure>
         <figure><div class="foto"><i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i><img loading="lazy" decoding="async" src="img/doc_nasc_marcos.jpg" alt="Registro de nascimento de Marcos, Corupá, 1970"></div><figcaption>O registro de nascimento de Marcos — Corupá, 1970. Guarda a genealogia inteira: os pais Vitório e Maria, os avós paternos Arlindo e Maria, e os maternos João da Silva e Lucinda Garcia da Silva.</figcaption></figure>
         <figure><div class="foto"><i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i><img loading="lazy" decoding="async" src="img/doc_veiculo.jpg" alt="Documento de propriedade de veículo do vô Vitório, 1962"></div><figcaption>Documento de propriedade de veículo do vô Vitório — Cartório Policial de Jaraguá do Sul, 1962.</figcaption></figure>
         <figure><div class="foto"><i class="pc pc-1"></i><i class="pc pc-2"></i><i class="pc pc-3"></i><i class="pc pc-4"></i><img loading="lazy" decoding="async" src="img/doc_assoc.jpg" alt="Cartão da Associação Comercial e Industrial do vô Vitório, 1986"></div><figcaption>O cartão da Associação Comercial e Industrial — o vô Vitório, industrial, em 1986.</figcaption></figure>
@@ -2048,6 +2144,28 @@
       <a href="mailto:sabrinajgs@icloud.com?subject=Foto%20para%20o%20álbum%20da%20família"><span class="ic">📷</span> Enviar uma foto</a>
     </div>
     <p class="recado-nota">Os recados e as fotos chegam primeiro para a Sabrina, que cuida deste álbum com carinho. É ela quem escolhe, com o coração, o que passa a fazer parte destas páginas — para que aqui fique guardado só o que é bonito e verdadeiro.</p>
+    <div class="compartilhar-zap">
+      <p class="pergunta-zap">E se alguém da família ainda não conhece o álbum…</p>
+      <a class="btn-zap" href="https://wa.me/?text=Venha%20conhecer%20o%20%C3%A1lbum%20da%20nossa%20fam%C3%ADlia%20Schiochet%20e%20Moretti%20%F0%9F%92%9B%20As%20fotos%20e%20as%20hist%C3%B3rias%20do%20v%C3%B4%20Vit%C3%B3rio%20e%20da%20v%C3%B3%20Maria%20est%C3%A3o%20aqui%3A%20https%3A%2F%2Ffamilia-schiochet.github.io%2F" target="_blank" rel="noopener">
+        <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        Mandar o álbum pelo WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <section id="como-usar">
+    <p class="rotulo">Para ajudar</p>
+    <h2>Como usar o álbum</h2>
+    <p class="abertura-secao">Este álbum é simples como folhear um caderno — e aqui não tem como errar nada. Um guia rapidinho, com carinho:</p>
+    <ul class="guia-lista">
+      <li><span class="guia-ic" aria-hidden="true">👆</span><span class="txt"><strong>Para passear pelo álbum</strong>Na tela inicial, toque num cartão e o assunto abre como uma página. Para voltar, toque no botão «&nbsp;←&nbsp;Início&nbsp;», lá no alto.</span></li>
+      <li><span class="guia-ic" aria-hidden="true">Aa</span><span class="txt"><strong>Letra pequena? É só aumentar</strong>No cantinho de baixo, à direita, mora o botão «&nbsp;Aa&nbsp;». Toque nele uma vez para a letra crescer, mais uma para crescer de novo — e outra para voltar ao normal. O álbum lembra da sua escolha.</span></li>
+      <li><span class="guia-ic" aria-hidden="true">🔊</span><span class="txt"><strong>Prefere ouvir?</strong>Ali do lado tem o botão «&nbsp;🔊&nbsp;»: ele lê a página em voz alta para você, com calma. Para parar, é só tocar nele de novo.</span></li>
+      <li><span class="guia-ic" aria-hidden="true">📷</span><span class="txt"><strong>Para ver uma foto de pertinho</strong>Toque em qualquer foto e ela abre grande na tela. Toque de novo em qualquer lugar e ela se fecha.</span></li>
+      <li><span class="guia-ic" aria-hidden="true">🖨</span><span class="txt"><strong>Para ter um capítulo no papel</strong>Dentro de um assunto, toque em «&nbsp;Imprimir&nbsp;», lá no alto, e aquele capítulo sai limpinho, pronto para imprimir e guardar.</span></li>
+      <li><span class="guia-ic" aria-hidden="true">💬</span><span class="txt"><strong>Para espalhar o álbum na família</strong>Na tela inicial tem o botão «&nbsp;Mandar o álbum pelo WhatsApp&nbsp;»: ele envia o endereço do álbum para quem você escolher.</span></li>
+    </ul>
+    <p class="guia-nota-fim">E se em algum momento você se perder por aqui, não faz mal nenhum: toque em «&nbsp;←&nbsp;Início&nbsp;» e comece de novo, com calma. O álbum estará sempre esperando por você.</p>
   </section>
 
 </main>
@@ -2063,6 +2181,7 @@
   <p>Um álbum vivo, sempre em construção — feito pela família, com amor.</p>
   <p>Feito com carinho, devagarinho, como se guarda o que importa.</p>
   <p>Última atualização: 16 de julho de 2026</p>
+  <p class="so-impressao">Página impressa do álbum da família Schiochet &amp; Moretti — familia-schiochet.github.io</p>
   <p style="margin-top:18px"><a href="#" onclick="history.back();return false;" class="voltar-rodape" style="display:none;color:var(--latao-texto);text-decoration:none;border-bottom:1px solid rgba(165,119,42,.4);padding-bottom:2px">↑ Voltar ao início</a></p>
 </footer>
 
