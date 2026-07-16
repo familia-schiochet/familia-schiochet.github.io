@@ -268,8 +268,7 @@
   }
   .mapa-caminho .pais-vizinho { fill: var(--papel); stroke: var(--linha); stroke-width: 0.8; opacity: 0.75; }
   .mapa-caminho .destaque { fill: var(--latao); opacity: 0.4; stroke: var(--latao-texto); stroke-width: 1; }
-  .mapa-duplo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
-  @media (max-width: 620px) { .mapa-duplo { grid-template-columns: 1fr; } }
+  .mapa-duplo { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 14px; margin-top: 14px; }
   .mapa-mini { background: var(--papel-carta); border: 1px solid var(--linha); padding: clamp(8px, 2vw, 14px); margin: 0; }
   .mapa-mini svg { display: block; width: 100%; height: auto; }
   .mapa-mini figcaption { text-align: center; font-style: italic; color: var(--tinta-suave); font-size: 0.92rem; margin-top: 8px; }
@@ -747,10 +746,29 @@
   .barra-voltar .btn-voltar {
     background: var(--latao-capa); color: #1B2C21;
     border: none; border-radius: 999px; cursor: pointer;
-    font-family: Georgia, serif; font-size: 1rem; font-weight: bold;
-    padding: 9px 20px; text-decoration: none; white-space: nowrap;
+    font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold;
+    padding: 12px 24px; text-decoration: none; white-space: nowrap;
   }
   .barra-voltar .btn-voltar:hover { filter: brightness(1.08); }
+
+  /* ── Botões de ajuda (pensando nos mais velhinhos) ── */
+  :root[data-letra="g1"] { font-size: 112%; }
+  :root[data-letra="g2"] { font-size: 126%; }
+  .botoes-ajuda {
+    position: fixed; right: 14px; bottom: 14px; z-index: 40;
+    display: none; flex-direction: column; gap: 10px;
+  }
+  .js .botoes-ajuda { display: flex; }
+  .btn-ajuda {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 1px solid var(--linha);
+    background: var(--papel-carta); color: var(--latao-texto);
+    font-family: Georgia, serif; font-size: 1.15rem; font-weight: bold;
+    cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+  }
+  .btn-ajuda:hover { filter: brightness(1.05); }
+  .btn-ajuda:focus-visible { outline: 2px solid var(--latao); outline-offset: 2px; }
+  #btn-topo { display: none; font-size: 1.5rem; }
   .barra-voltar .barra-titulo {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 1.25rem; color: var(--sobre-capa);
@@ -1210,6 +1228,18 @@
         <g transform="translate(20,20)"><rect width="10" height="20" fill="#4E9B63"/><rect x="10" width="10" height="20" fill="#F1EBDD"/><rect x="20" width="10" height="20" fill="#C34A44"/><rect width="30" height="20" fill="none" stroke="rgba(0,0,0,.15)"/></g>
       </svg>
         <figcaption>A Itália de verdade — com o <strong>Vêneto</strong> pintado de dourado: é lá que fica <strong>Belluno</strong>, de onde os Schiocchet partiram.</figcaption>
+      </figure>
+      <figure class="mapa-mini">
+        <svg viewBox="0 0 460 290" class="mapa-caminho" role="img" aria-label="Mapa verdadeiro das nove ilhas dos Açores, em Portugal, com as ilhas do Faial e Terceira pintadas de dourado — foi de lá que a família Garcia partiu.">
+        <ellipse class="terra" cx="49.0" cy="31.6" rx="4" ry="3"/><ellipse class="terra" cx="43.4" cy="52.1" rx="6" ry="8"/><ellipse class="destaque" cx="198.4" cy="120.1" rx="9" ry="6"/><text class="rotulo-cidade" x="198.4" y="106.1" text-anchor="middle">Faial</text><ellipse class="terra" cx="224.4" cy="128.8" rx="14" ry="5" transform="rotate(-15 224 129)"/><ellipse class="terra" cx="238.7" cy="114.6" rx="16" ry="4" transform="rotate(-30 239 115)"/><ellipse class="terra" cx="241.2" cy="83.0" rx="6" ry="5"/><ellipse class="destaque" cx="290.2" cy="109.0" rx="11" ry="8"/><text class="rotulo-cidade" x="290.2" y="95.0" text-anchor="middle">Terceira</text><ellipse class="terra" cx="396.2" cy="183.3" rx="18" ry="6" transform="rotate(-12 396 183)"/><ellipse class="terra" cx="421.6" cy="247.3" rx="8" ry="5"/>
+        <text class="rotulo-pais" x="230" y="34" text-anchor="middle">AÇORES · ILHAS DE PORTUGAL</text>
+        <g transform="translate(20,20)"><rect width="12" height="20" fill="#4E9B63"/><rect x="12" width="18" height="20" fill="#C34A44"/><circle cx="12" cy="10" r="3.4" fill="#D8B54A"/><rect width="30" height="20" fill="none" stroke="rgba(0,0,0,.15)"/></g>
+        <path class="agua" d="M 60,220 q 8,-6 16,0 q 8,6 16,0"/>
+        <path class="agua" d="M 330,100 q 8,-6 16,0 q 8,6 16,0"/>
+        <path class="agua" d="M 250,250 q 8,-6 16,0 q 8,6 16,0"/>
+        <path class="agua" d="M 390,200 q 8,-6 16,0 q 8,6 16,0"/>
+      </svg>
+        <figcaption>As nove ilhas dos <strong>Açores</strong>, de Portugal — as douradas, <strong>Faial e Terceira</strong>, são de onde partiu a família Garcia, da vó Maria.</figcaption>
       </figure>
       <figure class="mapa-mini">
         <svg viewBox="0 0 465 417" class="mapa-caminho" role="img" aria-label="Mapa verdadeiro do Brasil com o estado de Santa Catarina pintado de dourado e a região de Corupá e Jaraguá do Sul marcada.">
@@ -2133,6 +2163,39 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && lb.classList.contains('aberto')) fechar();
+  });
+})();
+</script>
+
+<div class="botoes-ajuda">
+  <button type="button" class="btn-ajuda" id="btn-letra" title="Tamanho da letra" aria-label="Aumentar o tamanho da letra">Aa</button>
+  <button type="button" class="btn-ajuda" id="btn-topo" title="Voltar ao começo" aria-label="Voltar ao começo da página">↑</button>
+</div>
+<script>
+(function () {
+  // Letra maior (pra quem tem a vista cansada) + voltar ao topo
+  var raiz = document.documentElement;
+  var btnL = document.getElementById('btn-letra');
+  var btnT = document.getElementById('btn-topo');
+  if (!btnL || !btnT) return;
+  var ordem = ['', 'g1', 'g2'];
+  var atual = '';
+  try { atual = localStorage.getItem('letra-album') || ''; } catch (e) {}
+  aplica(atual);
+  function aplica(v) {
+    atual = ordem.indexOf(v) >= 0 ? v : '';
+    if (atual) { raiz.setAttribute('data-letra', atual); } else { raiz.removeAttribute('data-letra'); }
+    btnL.textContent = atual === 'g1' ? 'AA' : (atual === 'g2' ? 'AA+' : 'Aa');
+    try { localStorage.setItem('letra-album', atual); } catch (e) {}
+  }
+  btnL.addEventListener('click', function () {
+    aplica(ordem[(ordem.indexOf(atual) + 1) % ordem.length]);
+  });
+  window.addEventListener('scroll', function () {
+    btnT.style.display = window.scrollY > 600 ? 'block' : 'none';
+  }, { passive: true });
+  btnT.addEventListener('click', function () {
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
   });
 })();
 </script>
